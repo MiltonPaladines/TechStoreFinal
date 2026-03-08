@@ -1,16 +1,15 @@
 package com.example.techaudit20.data
+
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-
 import androidx.room.TypeConverters
-import com.example.techaudit.model.AuditItem
+import com.example.techaudit20.model.AuditItem
 
 @Database(entities = [AuditItem::class], version = 1, exportSchema = false)
 @TypeConverters(Converters::class)
-
-abstract class AuditDatabase: RoomDatabase() {
+abstract class AuditDatabase : RoomDatabase() {
 
     abstract fun auditDao(): AuditDao
 

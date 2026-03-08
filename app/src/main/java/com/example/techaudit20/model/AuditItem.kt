@@ -1,4 +1,4 @@
-package com.example.techaudit.model
+package com.example.techaudit20.model
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize

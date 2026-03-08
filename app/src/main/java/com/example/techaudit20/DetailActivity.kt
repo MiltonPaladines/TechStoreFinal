@@ -1,10 +1,15 @@
 package com.example.techaudit20
 
+import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.example.techaudit20.databinding.ActivityDetailBinding
+import com.example.techaudit20.model.AuditItem
+import com.example.techaudit20.model.AuditStatus
 
 class DetailActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDetailBinding
@@ -40,7 +45,7 @@ class DetailActivity : AppCompatActivity() {
 
     private fun mostrarDetalles(item: AuditItem) {
         binding.tvDetalleNombre.text = item.nombre
-        binding.tvDetalleId.text = "ID: ${item.id.substring(0, 8)}..." // Mostrar solo 8 caracteres
+        binding.tvDetalleId.text = "ID: ${item.id.take(8)}..." // Mostrar solo 8 caracteres
         binding.tvDetalleUbicacion.text = item.ubicacion
         binding.tvDetalleFecha.text = item.fechaRegistro
         binding.tvDetalleNotas.text = item.notas.ifEmpty { "Sin notas registradas." }

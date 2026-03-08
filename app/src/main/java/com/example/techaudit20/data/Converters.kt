@@ -1,23 +1,23 @@
-package com.example.techaudit.data
+package com.example.techaudit20.data
 
 import androidx.room.TypeConverter
-import com.example.techaudit.model.AuditStatus
+import com.example.techaudit20.model.AuditStatus
 
 class Converters {
 
-    //De Enum a String
+    // De Enum a String
     @TypeConverter
     fun fromStatus(status: AuditStatus): String {
         return status.name
     }
 
-    //De String a Enum
+    // De String a Enum
     @TypeConverter
-    fun toStatus(value:String): AuditStatus {
+    fun toStatus(value: String): AuditStatus {
         return try {
             AuditStatus.valueOf(value)
         } catch (e: IllegalArgumentException) {
-            AuditStatus.PENDIENTE //Valor por defecto si falla
+            AuditStatus.PENDIENTE // Valor por defecto si falla
         }
     }
 }
