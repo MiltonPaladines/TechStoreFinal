@@ -16,11 +16,6 @@ class AuditRepository(private val auditDao: AuditDao) {
 
     suspend fun update(item: AuditItem) = auditDao.update(item)
 
-    // Cambiamos 'delete' por 'marcarComoEliminado' para el flujo de sincronización
     suspend fun marcarComoEliminado(item: AuditItem) = auditDao.marcarComoEliminado(item)
 
-    // Este lo usaremos únicamente en el bloque de sincronización
-    suspend fun borradoFisico(item: AuditItem) = auditDao.borradoFisico(item)
-
-    suspend fun getAllEquiposStatic() = auditDao.getAllEquiposStatic()
-}
+  }

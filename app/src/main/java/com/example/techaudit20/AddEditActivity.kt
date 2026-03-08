@@ -32,17 +32,16 @@ class AddEditActivity : AppCompatActivity() {
         binding = ActivityAddEditBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Manejo de Insets para diseño Edge-to-Edge
         ViewCompat.setOnApplyWindowInsetsListener(binding.root) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
 
-        // Recuperar el ID del laboratorio (obligatorio para nuevos registros)
+
         labId = intent.getStringExtra("EXTRA_LAB_ID")
 
-        // Verificar si estamos editando un equipo existente
+
         if (intent.hasExtra("EXTRA_ITEM_EDITAR")) {
             itemEditar = if (android.os.Build.VERSION.SDK_INT >= 33) {
                 intent.getParcelableExtra("EXTRA_ITEM_EDITAR", AuditItem::class.java)
@@ -98,7 +97,7 @@ class AddEditActivity : AppCompatActivity() {
         val estadoSeleccionado = binding.spEstado.selectedItem as AuditStatus
 
         if (itemEditar == null) {
-            // Caso: Nuevo Equipo
+
             val nuevoItem = AuditItem(
                 id = UUID.randomUUID().toString(),
                 laboratorioId = labId!!,
@@ -111,7 +110,7 @@ class AddEditActivity : AppCompatActivity() {
             viewModel.insert(nuevoItem)
             Toast.makeText(this, "Equipo Creado", Toast.LENGTH_SHORT).show()
         } else {
-            // Caso: Editar Equipo Existente
+
             val itemActualizado = itemEditar!!.copy(
                 nombre = nombre,
                 ubicacion = ubicacion,
@@ -122,6 +121,6 @@ class AddEditActivity : AppCompatActivity() {
             Toast.makeText(this, "Equipo Actualizado", Toast.LENGTH_SHORT).show()
         }
 
-        finish() // Volver a la pantalla anterior
+        finish()
     }
 }

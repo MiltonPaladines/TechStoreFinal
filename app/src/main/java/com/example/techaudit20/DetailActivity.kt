@@ -18,18 +18,18 @@ class DetailActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
-        // Inicializamos el binding y establecemos la vista una sola vez
+
         binding = ActivityDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Manejo de Insets para el diseño Edge-to-Edge
+
         ViewCompat.setOnApplyWindowInsetsListener(binding.root) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
 
-        // 1. Recuperamos el objeto enviado
+
         val item = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             intent.getParcelableExtra("EXTRA_ITEM", AuditItem::class.java)
         } else {
@@ -37,7 +37,7 @@ class DetailActivity : AppCompatActivity() {
             intent.getParcelableExtra<AuditItem>("EXTRA_ITEM")
         }
 
-        // 2. Mostrar datos si el objeto existe
+
         item?.let {
             mostrarDetalles(it)
         }
@@ -50,7 +50,7 @@ class DetailActivity : AppCompatActivity() {
         binding.tvDetalleFecha.text = item.fechaRegistro
         binding.tvDetalleNotas.text = item.notas.ifEmpty { "Sin notas registradas." }
 
-        // 3. Lógica visual según el estado (Pintar la cabecera)
+
         val color = when (item.estado) {
             AuditStatus.OPERATIVO -> Color.parseColor("#4CAF50")
             AuditStatus.PENDIENTE -> Color.parseColor("#FFC107")
