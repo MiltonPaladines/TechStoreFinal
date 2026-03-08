@@ -27,15 +27,16 @@
             android:id="@+id/tvNombreEquipo"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Servidor Dell PowerEdge"
-            android:textSize="18sp"
+            tools:text="Servidor Dell PowerEdge"
+            android:textSize="17sp"
             android:textStyle="bold"
-            android:textColor="@color/black"
-            android:layout_marginStart="12dp"
-            android:layout_marginTop="12dp"
+            android:fontFamily="sans-serif-medium"
+            android:textColor="#212121"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="14dp"
             app:layout_constraintStart_toEndOf="@id/viewStatusColor"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            app:layout_constraintEnd_toStartOf="@id/tvEstadoLabel"/>
 
         <TextView
             android:id="@+id/tvUbicacion"
