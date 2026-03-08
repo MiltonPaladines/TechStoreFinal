@@ -17,7 +17,7 @@ class Converters {
         return try {
             AuditStatus.valueOf(value)
         } catch (e: IllegalArgumentException) {
-            AuditStatus.PENDIENTE // Valor por defecto si falla
+            AuditStatus.PENDIENTE
         }
     }
 }

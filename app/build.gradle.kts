@@ -64,4 +64,9 @@ dependencies {
     implementation("androidx.room:room-runtime:$roomVersion")
     implementation("androidx.room:room-ktx:$roomVersion")
     ksp("androidx.room:room-compiler:$roomVersion")
+
+    // Retrofit para peticiones HTTP
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    // Gson Converter para transformar JSON a Data Classes automáticamente
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
 }

@@ -1,21 +1,21 @@
 package com.example.techaudit20.data
 
 import com.example.techaudit20.model.AuditItem
+import com.example.techaudit20.model.Laboratorio
 import kotlinx.coroutines.flow.Flow
 
 class AuditRepository(private val auditDao: AuditDao) {
 
-    val allItems: Flow<List<AuditItem>> = auditDao.getAllItems()
+    val allLaboratorios: Flow<List<Laboratorio>> = auditDao.getAllLaboratorios()
 
-    suspend fun insert(item: AuditItem) {
-        auditDao.insert(item)
-    }
+    suspend fun insertLaboratorio(lab: Laboratorio) = auditDao.insertLaboratorio(lab)
 
-    suspend fun update(item: AuditItem) {
-        auditDao.update(item)
-    }
 
-    suspend fun delete(item: AuditItem) {
-        auditDao.delete(item)
-    }
+    fun getEquiposByLab(labId: String): Flow<List<AuditItem>> = auditDao.getEquiposByLaboratorio(labId)
+
+    suspend fun insert(item: AuditItem) = auditDao.insert(item)
+    suspend fun update(item: AuditItem) = auditDao.update(item)
+    suspend fun delete(item: AuditItem) = auditDao.delete(item)
+
+    suspend fun getAllEquiposStatic() = auditDao.getAllEquiposStatic()
 }

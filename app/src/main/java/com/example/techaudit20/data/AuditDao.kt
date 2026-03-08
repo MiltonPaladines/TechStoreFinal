@@ -8,30 +8,36 @@ import androidx.room.Query
 import androidx.room.Update
 
 import com.example.techaudit20.model.AuditItem
+import com.example.techaudit20.model.Laboratorio
 import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface AuditDao {
 
-    // Traer todos los equipos ordenados por fecha
-    @Query("SELECT * FROM equipos ORDER BY fechaRegistro DESC")
-    fun getAllItems() : Flow<List<AuditItem>>
+    @Query("SELECT * FROM laboratorios ORDER BY nombre ASC")
+    fun getAllLaboratorios(): kotlinx.coroutines.flow.Flow<List<Laboratorio>>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertLaboratorio(lab: Laboratorio)
+
+    @Delete
+    suspend fun deleteLaboratorio(lab: Laboratorio)
 
 
-    // Buscar uno solo por ID
-    @Query("SELECT * FROM equipos WHERE id = :id")
-    suspend fun getById(id: String) : AuditItem
+    @Query("SELECT * FROM equipos WHERE laboratorioId = :labId ORDER BY fechaRegistro DESC")
+    fun getEquiposByLaboratorio(labId: String): kotlinx.coroutines.flow.Flow<List<AuditItem>>
 
-    // Insertar un nuevo equipo
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(item: AuditItem)
 
-    // Actualizar un equipo
     @Update
     suspend fun update(item: AuditItem)
 
-    // Borrar
     @Delete
     suspend fun delete(item: AuditItem)
 
+    // Para la sincronización (obtener todos sin filtro)
+    @Query("SELECT * FROM equipos")
+    suspend fun getAllEquiposStatic(): List<AuditItem>
 }
