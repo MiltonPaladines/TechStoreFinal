@@ -14,8 +14,14 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface AuditDao {
 
+    // --- SECCIÓN DE LABORATORIOS ---
+
     @Query("SELECT * FROM laboratorios ORDER BY nombre ASC")
-    fun getAllLaboratorios(): kotlinx.coroutines.flow.Flow<List<Laboratorio>>
+    fun getAllLaboratorios(): Flow<List<Laboratorio>>
+
+
+    @Query("SELECT * FROM laboratorios")
+    suspend fun getAllLaboratoriosStatic(): List<Laboratorio>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertLaboratorio(lab: Laboratorio)
@@ -24,20 +30,29 @@ interface AuditDao {
     suspend fun deleteLaboratorio(lab: Laboratorio)
 
 
-    @Query("SELECT * FROM equipos WHERE laboratorioId = :labId ORDER BY fechaRegistro DESC")
-    fun getEquiposByLaboratorio(labId: String): kotlinx.coroutines.flow.Flow<List<AuditItem>>
+    // --- SECCIÓN DE EQUIPOS ---
 
+    // 1. Consulta para la UI: Solo muestra los que NO están marcados para borrar
+    @Query("SELECT * FROM equipos WHERE laboratorioId = :labId AND eliminado = 0 ORDER BY fechaRegistro DESC")
+    fun getEquiposByLaboratorio(labId: String): Flow<List<AuditItem>>
 
+    // 2. Inserción y Actualización (OnConflict REPLACE es vital para la sincronización)
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(item: AuditItem)
 
     @Update
     suspend fun update(item: AuditItem)
 
-    @Delete
-    suspend fun delete(item: AuditItem)
+    // 3. Borrado Lógico: Lo usamos en el Swipe para ocultarlo sin borrarlo de la DB aún
+    @Update
+    suspend fun marcarComoEliminado(equipo: AuditItem)
 
-    // Para la sincronización (obtener todos sin filtro)
+    // 4. Borrado Físico: Lo usamos en sincronizarDatos() tras confirmar con MockAPI
+    @Delete
+    suspend fun borradoFisico(equipo: AuditItem)
+
+    // 5. Para Sincronización: Obtiene todos los registros (incluyendo eliminados) sin ser Flow
     @Query("SELECT * FROM equipos")
     suspend fun getAllEquiposStatic(): List<AuditItem>
+
 }

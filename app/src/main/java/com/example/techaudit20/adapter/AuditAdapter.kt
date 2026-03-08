@@ -10,7 +10,8 @@ import com.example.techaudit20.databinding.ItemAuditBinding
 
 class AuditAdapter (
     val listaAuditoria: MutableList<AuditItem>,
-    private val onItemSelected: (AuditItem) -> Unit
+    private val onItemSelected: (AuditItem) -> Unit,
+    private val onItemLongSelected: (AuditItem) -> Unit // Callback para edición
 ): RecyclerView.Adapter<AuditAdapter.AuditViewHolder>() {
 
     inner class AuditViewHolder(val binding: ItemAuditBinding) :
@@ -31,13 +32,19 @@ class AuditAdapter (
         notifyDataSetChanged()
     }
 
+    fun getEquipoAt(position: Int): AuditItem {
+        return listaAuditoria[position]
+    }
+
     override fun onBindViewHolder(holder: AuditViewHolder, position: Int) {
         val item = listaAuditoria[position]
 
+        // Configuración de textos
         holder.binding.tvNombreEquipo.text = item.nombre
         holder.binding.tvUbicacion.text = item.ubicacion
         holder.binding.tvEstadoLabel.text = item.estado.name
 
+        // Configuración de colores según el estado
         val colorEstado = when(item.estado) {
             AuditStatus.OPERATIVO -> Color.parseColor("#4CAF50")
             AuditStatus.PENDIENTE -> Color.parseColor("#9E9E9E")
@@ -48,8 +55,17 @@ class AuditAdapter (
         holder.binding.viewStatusColor.setBackgroundColor(colorEstado)
         holder.binding.tvEstadoLabel.setTextColor(colorEstado)
 
+
+
+
         holder.itemView.setOnClickListener {
             onItemSelected(item)
+        }
+
+
+        holder.itemView.setOnLongClickListener {
+            onItemLongSelected(item)
+            true
         }
     }
 }

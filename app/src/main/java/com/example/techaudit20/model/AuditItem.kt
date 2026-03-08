@@ -28,5 +28,6 @@ data class AuditItem(
     val fechaRegistro: String,
     var estado: AuditStatus = AuditStatus.PENDIENTE,
     var notas: String = "",
-    var fotoUri: String? = null
+    var fotoUri: String? = null,
+    val eliminado: Boolean = false
 ) : Parcelable

@@ -43,6 +43,6 @@ class AuditViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     fun delete(item: AuditItem) = viewModelScope.launch {
-        repository.delete(item)
+        repository.marcarComoEliminado(item)
     }
 }
